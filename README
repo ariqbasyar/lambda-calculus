@@ -1,0 +1,44 @@
+A haskell interpreter for the lambda calculus.
+
+The interpreter was originally written as an asignment for Design of Programming Languages.
+It has evolved slightly, but remains a simple (and slow) interpreter for a Church's Lambda calculus.
+
+The Lambda calculus:
+
+In its primitive form the lambda calculus has anonymous functions, single character variables, and applications.
+Expressions are reduced by applying functions until no further reductions can occure.
+
+"ac" is an application of a to c.  Because a is undefined (or free), no further reduction can occure.
+ac => ac
+
+(\a.a) is a lambda function which takes one paramter.  Alone it has no further reduction, but it can be applied to something:
+(\a.a)c => c
+(\a.(\b.bc)a)d => dc
+
+and so on.
+
+Church numbers are represented as a nested lambda
+1 = (\ab.ab) 
+2 = (\a.(\b.a(ab)))
+3 = (\a.(\b.a(a(ab))))
+4 =  (\a.(\b.a(a(a(ab)))))
+and so on
+
+Encoded this way, a number is a repeated application of its first parameter to its second.
+This is convinient as we can basically use a number as a finite loop.  Addition of A and B, for instance, can easily be defined in terms of a subsequent function S as ASB since that will have the effect of apply S to B A times.
+
+
+This Interpreter:
+
+The parser allows for some short hand.  Immediatly nested lambda expressions can be combined into a (syntactically) multi-variable function:
+
+(\a.\b.(bc)a) == (\ab.bca)
+
+A number is interted as a church numberal:
+2 => (\ab.a(ab))
+
+And there are several 'library functions', for instance
+S => (\\wyx.y(wyx))
+which is the 'subsequent' function for a church numeral.
+
+See Library.hs for complete list.
