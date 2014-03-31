@@ -34,7 +34,7 @@ The parser allows for some short hand.  Immediatly nested lambda expressions can
 
 (\a.\b.(bc)a) == (\ab.bca)
 
-A number is interted as a church numberal:
+A integer is interpreted as a church number:
 2 => (\ab.a(ab))
 
 And there are several 'library functions', for instance
